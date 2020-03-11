@@ -1,0 +1,252 @@
+label.error {
+    color: red;
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    font-size: 13px;
+}
+
+#form1 {
+    width: auto;
+}
+
+#blah {
+    max-height: none;
+    height: auto;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#img_contain {
+    border-radius: 5px;
+    margin-top: 0px;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+
+.imgInp {
+    width: 150px;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #d3d3d3;
+}
+
+.loading {
+    animation: blinkingText ease 2.5s infinite;
+}
+
+.custom-file-label {
+    cursor: pointer;
+}
+
+.credit a {
+    color: gray;
+}
+
+.credit a:hover {
+    color: black;
+}
+
+div#img_contain {
+    max-width: 100%;
+    position: relative;
+}
+
+div#img_contain img {
+    max-width: 100%;
+    width: 100%;
+}
+
+label.custom-control-label[for="featured"] {
+    color: #fff;
+}
+
+[dir=ltr] .align-items-end {
+    justify-content: flex-end;
+}
+
+.row.flex-end {
+    align-items: flex-end;
+}
+
+.btn-save-col {
+    padding-top: 30px;
+}
+
+[dir=ltr] .card-body {
+    padding: 15px;
+}
+
+[dir=ltr] .page-link:focus {
+    box-shadow: none;
+}
+
+[dir=ltr] .custom-checkbox-toggle .custom-control-label:after {
+    top: 1px;
+}
+
+[dir=ltr] .custom-checkbox-toggle .custom-control-label {
+    padding-left: 5px;
+}
+
+[dir=ltr] .modal-footer {
+    padding-top: 0;
+}
+
+[dir=ltr] .modal-body {
+    padding-bottom: 0;
+}
+
+ul.list-many {
+    padding: 0;
+    margin: 0;
+    padding-left: 15px;
+}
+
+th.table-action {
+    width: 120px;
+}
+
+.course-cover {
+    width: 100px;
+    height: 50px;
+}
+
+[dir=ltr] .table thead th {
+    font-size: 13px;
+}
+
+[dir=ltr] .table tbody td,
+[dir=ltr] .table thead th {
+    font-size: 13px;
+}
+
+[dir=ltr] .layout-fluid .page__container {
+    max-width: 1200px;
+}
+
+th.course-name {
+    max-width: 250px;
+    width: 250px;
+}
+
+.card.card-teacher-add {
+    padding: 15px 15px 0 15px;
+}
+
+[dir=ltr]  .user-avatar img {
+    max-width: 50px;
+    height: auto;
+}
+
+.embed-responsive.hide {
+    display: none;
+}
+
+.search-form--light button.btn.btn-primary {
+    height: 41px;
+    background: #db2d52;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+}
+
+.slide-thumb div#img_contain {
+    margin: 0;
+}
+
+[dir=ltr] .custom-control-label:after {
+    background-position: 5px 5px;
+}
+
+[dir=ltr] b, [dir=ltr] strong {
+    font-weight: 700;
+}
+
+h4.card-title {
+    font-size: 18px;
+}
+
+ul.list-topics.ui-sortable {
+    padding-left: 0;
+}
+
+#create-lesson .richText-editor {
+    height: 200px;
+}
+
+ul.list-items-lesson {
+    padding: 0;
+}
+
+[dir=ltr] .nestable-item-handle .nestable-content {
+    background: #F8F8F8;
+}
+
+ul.list-items-lesson {
+    background: #EBEEF0;
+    padding: 15px;
+}
+
+[dir=ltr] .nestable-item-handle .nestable-content {
+    padding: 0;
+}
+
+.nestable-content .media.align-items-center {
+    padding: 10px;
+}
+
+ul.list-items-lesson li {
+    margin: 0;
+}
+
+.list-items-lesson li.nestable-item.nestable-item-handle {
+    margin: 0;
+}
+
+.action-add-content-topics {
+    background: #EBEEF0;
+    padding: 10px 10px 10px;
+}
+
+.list-items-lesson li.nestable-item.nestable-item-handle:last-child {
+    border: 0;
+}
+
+h5.card-title.topics-name {
+    font-size: 16px;
+}
+
+ul.list-items-lesson.ui-sortable {
+    padding: 10px 10px 0 10px;
+}
+
+h4.title-item-name {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.list-items-lesson .nestable-handle {
+    position: relative !important;
+    margin: 0 !important;
+}
+
+[dir=ltr] .list-items-lesson .nestable-item-handle .nestable-content {
+    margin: 0;
+    width: calc(100% - 35px);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.list-items-lesson li.nestable-item {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.topics-description {
+    padding: 0 15px;
+    padding-bottom: 10px;
+}

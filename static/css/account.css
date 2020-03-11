@@ -1,0 +1,10 @@
+img.main-site-logo {
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+label.error {
+    width: 100%;
+    color: red;
+    font-size: 14px;
+}
