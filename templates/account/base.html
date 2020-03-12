@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <!-- Prevent the demo from appearing in search engines (REMOVE THIS) -->
+    <meta name="robots" content="noindex">
+
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" href="{% static 'css/perfect-scrollbar.css' %}" rel="stylesheet">
+
+
+    <!-- Material Design Icons -->
+    <link type="text/css" href="{% static 'css/material-icons.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/material-icons.rtl.css' %}" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link type="text/css" href="{% static 'css/fontawesome.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/fontawesome.rtl.css' %}" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link type="text/css" href="{% static 'css/app.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/app.rtl.css' %}" rel="stylesheet">
+
+     <!-- Sweet Alert -->
+    <link rel="stylesheet" href="{% static 'css/sweetalert.css' %}">
+
+    <!--custom css-->
+    <link type="text/css" href="{% static 'css/account.css' %}" rel="stylesheet">
+</head>
+
+<body class="login" style="background: #262f40;">
+
+    {% block  pagecontent%}
+
+    {% endblock %}
+
+    <!-- jQuery -->
+    <script src="{% static 'vendor/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap -->
+    <script src="{% static 'vendor/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap.min.js' %}"></script>
+
+    <!-- Perfect Scrollbar -->
+    <script src="{% static 'vendor/perfect-scrollbar.min.js' %}"></script>
+
+    <!-- MDK -->
+    <script src="{% static 'vendor/dom-factory.js' %}"></script>
+    <script src="{% static 'vendor/material-design-kit.js' %}"></script>
+
+    <!-- App JS -->
+    <script src="{% static 'js/app.js' %}"></script>
+
+    <!-- Highlight.js -->
+    <script src="{% static 'js/hljs.js' %}"></script>
+
+    <!-- App Settings (safe to remove) -->
+    <script src="{% static 'js/app-settings.js' %}"></script>
+
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+    <!-- Sweet Alert -->
+    <script src="{% static 'vendor/sweetalert.min.js' %}"></script>
+    <script src="{% static 'js/sweetalert.js' %}"></script>
+
+    {% block  scriptcustom%}
+
+    {% endblock %}
+
+</body>
+
+</html>
