@@ -55,5 +55,103 @@
   </div>
   {% endblock %}
 
-  {% block scriptcustom %}
+ {% block scriptcustom %}
+  <script>
+      //main validate
+      $("#login-form").validate({
+          rules: {
+              email: {
+                  email: true,
+                  required: true,
+                  emailfound: true,
+              },
+              password: "required",
+          },
+          messages: {
+              email: {
+                  required: "required",
+                  email: "Invalid email format",
+                  emailfound: "not found email",
+              },
+              password: "required",
+          },
+          submitHandler: function () {
+              let url = "{% url 'checklogin' %}";
+              var csrftoken = getCookie('csrftoken');
+              $.ajax({
+                  url: url,
+                  type: "POST",
+                  data: {
+                      'email': $("#email").val(),
+                      'pass': $("#password").val(),
+                      'csrfmiddlewaretoken': csrftoken
+                  },
+                  dataType: 'json',
+                  success: function (data) {
+                      let dashboardurl = "{% url 'home' %}";
+                      if(data.status == 'success'){
+                           location.href = dashboardurl;
+                      }else{
+                           swal({
+                                title: "Are you sure?",
+                                text: "Not found user",
+                                type: "warning",
+                                showCancelButton: false,
+                                confirmButtonClass: "btn-danger",
+                                confirmButtonText: "Login again",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            });
+                      }
+                  },
+                  async: false
+              });
+          },
+      });
+
+      //check email
+      jQuery.validator.addMethod("emailfound", function (email, element) {
+          var csrftoken = getCookie('csrftoken');
+          let url = "{% url 'checkemail' %}";
+
+          let response = false;
+          $.ajax({
+              url: url,
+              type: "POST",
+              data: {
+                  'email': email,
+                  'csrfmiddlewaretoken': csrftoken
+              },
+              dataType: 'json',
+              success: function (data) {
+                  if (data.status == true) {
+                      response = true;
+                  } else {
+                      response = false;
+                  }
+              },
+              async: false
+          });
+
+          return response;
+
+      }, "not found email");
+
+      // using jQuery key form
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+  </script>
   {% endblock %}
