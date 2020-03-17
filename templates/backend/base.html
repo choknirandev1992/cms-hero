@@ -25,6 +25,11 @@
 
     <!-- custom css -->
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+    {% block  headercustom %}
+
+    {% endblock %}
+
 </head>
 
 <body class=" layout-fluid">
@@ -129,7 +134,7 @@
     <script src="{% static 'js/app.js' %}"></script>
 
 
-    {% block  scriptcustom%}
+    {% block  footercustom%}
 
     {% endblock %}
 
