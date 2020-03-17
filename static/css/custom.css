@@ -250,3 +250,7 @@ h4.title-item-name {
     padding: 0 15px;
     padding-bottom: 10px;
 }
+
+.sidebar-p-y .sidebar-heading {
+    font-size: 15px;
+}
