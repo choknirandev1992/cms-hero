@@ -1,0 +1,173 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block  headercustom %}
+<!-- Sweet Alert -->
+<link rel="stylesheet" href="{% static 'css/sweetalert.css' %}">
+{% endblock %}
+
+{% block pagecontent %}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">หน้าหลัก</a></li>
+    <li class="breadcrumb-item active">ผู้ใช้งานระบบ</li>
+</ol>
+<div class="d-flex flex-column flex-sm-row flex-wrap mb-headings align-items-start align-items-sm-center">
+    <div class="flex mb-2 mb-sm-0">
+        <h1 class="h2">ผู้ใช้งานระบบ</h1>
+    </div>
+    <a href="{% url 'addnewuser' %}" class="btn btn-success">เพิ่มผู้ใช้</a>
+</div>
+
+<div class="card card-body border-left-3 border-left-primary navbar-shadow mb-4">
+    <form method="GET">
+        <input type="hidden" name="s" value="search">
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="ชื่อผู้ใช้งานระบบ" id="username" name="username" value="{{request.GET.username}}">
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="ชื่อ" id="first_name" name="first_name" value="{{request.GET.first_name}}">
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="form-group">
+                   <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email" value="{{request.GET.email}}">
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="โทรศัพท์" id="phone" name="phone"
+                                value="{{request.GET.phone}}">
+                    <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" role="button"><i class="material-icons">search</i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center" style="white-space: nowrap;">
+            <small class="flex text-muted text-uppercase mr-3 mb-2 mb-sm-0">แสดง {{ profile.start_index }} ถึง
+                {{ profile.end_index }} จาก {{ profile.paginator.count }} รายการ</small>
+        </div>
+    </form>
+</div>
+{% if profile %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-body border-left-3 navbar-shadow mb-4">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>รูป</th>
+                        <th>ชื่อผู้ใช้ระบบ</th>
+                        <th>ชื่อ-สกุล</th>
+                        <th>อีเมล์</th>
+                        <th>โทรศัพท์</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="list" id="search">
+                    {% for profiles in profile %}
+                    <tr>
+                        <td class="user-avatar"><img src="{{profiles.user_photo.url}}" alt="Card image cap"
+                                class="avatar-img rounded"></td>
+                        <td>{{ profiles.user.username  }}</td>
+                        <td>{{ profiles.user.first_name  }} {{ profiles.user.last_name  }}</td>
+                        <td>{{ profiles.user.email }}</td>
+                        <td>{{ profiles.user_phone }}</td>
+                        <td>
+                            <a href="{% url 'editprofile' profiles.id %}" class="btn btn-white btn-sm"><i
+                                    class="material-icons">edit</i></a>
+                            <a href="javascript:void(0)" class="btn btn-white btn-sm remove-lesson"
+                                onclick="return deleteuser(user_id = {{ profiles.id }})"><i
+                                    class="material-icons">clear</i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <!-- Pagination -->
+    {% if profile.has_other_pages %}
+    <ul class="pagination justify-content-center pagination-sm">
+        {% if profile.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ profile.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true" class="material-icons">chevron_left</span>
+                <span>Prev</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true" class="material-icons">chevron_left</span>
+                <span>Prev</span>
+            </a>
+        </li>
+        {% endif %}
+        {% for i in profile.paginator.page_range %}
+        {% if profile.number == i %}
+        <li class="page-item active">
+            <a class="page-link" href="#" aria-label="1">
+                <span>{{ i }}</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ i }}" aria-label="1">
+                <span>{{ i }}</span>
+            </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if profile.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ profile.next_page_number }}" aria-label="Next">
+                <span>Next</span>
+                <span aria-hidden="true" class="material-icons">chevron_right</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" aria-label="Next">
+                <span>Next</span>
+                <span aria-hidden="true" class="material-icons">chevron_right</span>
+            </a>
+        </li>
+
+        {% endif %}
+    </ul>
+    {% endif %}
+
+</div>
+
+{% else %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-light alert-dismissible border-1 border-left-3 border-left-warning" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="text-black-70">ไม่พบรายการผู้ใช้งานระบบ</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block footercustom %}
+
+<!-- Sweet Alert -->
+<script src="{% static 'vendor/sweetalert.min.js' %}"></script>
+<script src="{% static 'js/sweetalert.js' %}"></script>
+
+{% endblock %}
