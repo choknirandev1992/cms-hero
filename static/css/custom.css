@@ -1,3 +1,15 @@
+[dir=ltr] body {
+    font-family: 'Sarabun', sans-serif;
+}
+
+[dir=ltr] .h1, [dir=ltr] .h2, [dir=ltr] .h3, [dir=ltr] .h4, [dir=ltr] .h5, [dir=ltr] .h6, [dir=ltr] h1, [dir=ltr] h2, [dir=ltr] h3, [dir=ltr] h4, [dir=ltr] h5, [dir=ltr] h6 {
+    font-family: 'Kanit', sans-serif;
+}
+
+[dir=ltr] .form-label {
+    font-size: 15px;
+}
+
 label.error {
     color: red;
     margin-top: 5px;
