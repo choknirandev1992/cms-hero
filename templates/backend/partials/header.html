@@ -24,14 +24,11 @@
                     <li class="nav-item dropdown ml-1 ml-md-3">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"><i class="material-icons">person_outline</i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="instructor-account-edit.html">
-                                <i class="material-icons">edit</i> Edit Account
-                            </a>
-                            <a class="dropdown-item" href="instructor-profile.html">
-                                <i class="material-icons">person</i> Public Profile
+                            <a class="dropdown-item" href="{% url 'profile'%}">
+                                <i class="material-icons">edit</i> โปรไฟล์
                             </a>
                             <a class="dropdown-item" href="{% url 'logout' %}">
-                                <i class="material-icons">lock</i> Logout
+                                <i class="material-icons">lock</i> ออกจากระบบ
                             </a>
                         </div>
                     </li>

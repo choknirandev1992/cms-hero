@@ -6,25 +6,25 @@
                                 <!-- Account menu -->
                                 <div class="sidebar-heading">จัดผู้ใช้งานระบบ</div>
                                 <ul class="sidebar-menu">
-                                    <li class="sidebar-menu-item">
-                                        <a class="sidebar-menu-button sidebar-js-collapse" data-toggle="collapse" href="#account_menu">
+                                    <li class="sidebar-menu-item {% if request.resolver_match.url_name in 'profile,addnewuser,users' %}open{% endif %}">
+                                        <a class="sidebar-menu-button sidebar-js-collapse {% if request.resolver_match.url_name in 'profile,addnewuser,users' %}show{% endif %}" data-toggle="collapse" href="#account_menu">
                                             <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">person_outline</i>
                                             ข้อมูลผู้ใช้งานระบบ
                                             <span class="ml-auto sidebar-menu-toggle-icon"></span>
                                         </a>
                                         <ul class="sidebar-submenu sm-indent collapse" id="account_menu">
-                                            <li class="sidebar-menu-item">
-                                                <a class="sidebar-menu-button" href="guest-login.html">
+                                            <li class="sidebar-menu-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+                                                <a class="sidebar-menu-button" href="{% url 'profile' %}">
                                                     <span class="sidebar-menu-text">ข้อมูลส่วนตัว</span>
                                                 </a>
                                             </li>
-                                             <li class="sidebar-menu-item">
-                                                <a class="sidebar-menu-button" href="guest-signup.html">
+                                             <li class="sidebar-menu-item {% if request.resolver_match.url_name == 'users' %}active{% endif %}">
+                                                <a class="sidebar-menu-button" href="{% url 'users' %}">
                                                     <span class="sidebar-menu-text">รายการผู้ใช้งาน</span>
                                                 </a>
                                             </li>
-                                            <li class="sidebar-menu-item">
-                                                <a class="sidebar-menu-button" href="guest-signup.html">
+                                            <li class="sidebar-menu-item {% if request.resolver_match.url_name == 'addnewuser' %}active{% endif %}">
+                                                <a class="sidebar-menu-button" href="{% url 'addnewuser' %}">
                                                     <span class="sidebar-menu-text">เพิ่มผู้ใช้งาน</span>
                                                 </a>
                                             </li>

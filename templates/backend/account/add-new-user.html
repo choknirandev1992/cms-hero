@@ -1,0 +1,327 @@
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block  headercustom %}
+
+{% endblock %}
+
+{% block pagecontent %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">หน้าหลัก</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'users' %}">ผู้ใช้งาน</a></li>
+  <li class="breadcrumb-item active">เพิ่มผู้ใช้งาน</li>
+</ol>
+<div class="d-flex flex-column flex-sm-row flex-wrap mb-headings align-items-start align-items-sm-center">
+  <div class="flex mb-2 mb-sm-0">
+    <h1 class="h2">เพิ่มผู้ใช้งาน</h1>
+  </div>
+</div>
+<div class="card card-teacher-add">
+  <div class="card-body">
+    <form class="form-horizontal" id="create-teacher" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group row">
+        <label for="name" class="col-sm-3 col-form-label form-label">ชื่อผู้ใช้งานระบบ</label>
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-md-12">
+              <input name="user_login" id="user_login" type="text" class="form-control" placeholder="ชื่อผู้ใช้งานระบบ">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="name" class="col-sm-3 col-form-label form-label">ชื่อ-สกุล</label>
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-md-6">
+              <input type="text" id="first_name" name="first_name" class="form-control" placeholder="ชื่อจริง">
+            </div>
+            <div class="col-md-6">
+              <input type="text" id="last_name" name="last_name" class="form-control" placeholder="นามสกุล">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="email" class="col-sm-3 col-form-label form-label">ข้อมูลติดต่อ</label>
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="material-icons md-18 text-muted">mail</i>
+                  </div>
+                </div>
+                <input type="text" name="user_email" id="user_email" class="form-control" placeholder="อีเมล์">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="material-icons md-18 text-muted">phone</i>
+                  </div>
+                </div>
+                <input type="text" name="user_phone" id="user_phone" class="form-control" placeholder="เบอร์โทร">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="password" class="col-sm-3 col-form-label form-label">รหัสผ่าน</label>
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="material-icons md-18 text-muted">lock</i>
+                  </div>
+                </div>
+                <input type="password" id="user_pass" name="user_pass" class="form-control" placeholder="ตั้งรหัสผ่าน">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="material-icons md-18 text-muted">lock</i>
+                  </div>
+                </div>
+                <input type="password" id="password_confirm" name="password_confirm" class="form-control"
+                  placeholder="ยืนยันรหัสผ่าน">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="avatar" class="col-sm-3 col-form-label form-label">รูปโปรไฟล์</label>
+        <div class="col-sm-9">
+          <div class="media align-items-center">
+            <div class="media-left">
+              <div class="icon-block rounded">
+                <div id='img_contain'><img id="blah" src="{% static 'images/default.jpg' %}" alt="your image"
+                    title='' /></div>
+              </div>
+            </div>
+            <div class="media-body">
+              <div class="custom-file">
+                <input type="file" id="user_photo" name="user_photo" class="imgInp custom-file-input"
+                  aria-describedby="thumbnail_image">
+                <label class="custom-file-label" for="user_photo">เลือกรูปภาพ</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-9 offset-sm-3">
+          <div class="media align-items-center">
+            <div class="media-left">
+              <button type="submit" class="btn btn-success">บันทึกข้อมูล</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block footercustom %}
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script>
+  //no space
+  jQuery.validator.addMethod("noSpace", function (value, element) {
+    return value.indexOf(" ") < 0 && value != "";
+  });
+
+  //check language
+  $.validator.addMethod("language", function (value) {
+    regEx = /^[0-9a-zA-Z]+$/;
+    if (!regEx.test(value))
+      return false;
+    else if (regEx.test(value))
+      return true;
+  });
+
+  //check noSpace
+  jQuery.validator.addMethod("noSpace", function (value, element) {
+    return value.indexOf(" ") < 0 && value != "";
+  });
+
+  //check username
+  jQuery.validator.addMethod("usernamedupicate", function (username, element) {
+    var csrftoken = getCookie('csrftoken');
+    let url = "{% url 'checkusername' %}"; 
+    
+    let response = false;
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        'username': username,
+        'csrfmiddlewaretoken': csrftoken
+      },
+      dataType: 'json',
+      success: function (data) {
+        if(data.status == true){
+            response =  false;
+        }else{
+            response =  true;
+        }
+      },
+      async: false
+    });
+
+    return response;
+  
+  }, "This username already exists");
+
+  //check email
+  jQuery.validator.addMethod("emaildupicate", function (email, element) {
+    var csrftoken = getCookie('csrftoken');
+    let url = "{% url 'checkemail' %}"; 
+    
+    let response = false;
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: {
+        'email': email,
+        'csrfmiddlewaretoken': csrftoken
+      },
+      dataType: 'json',
+      success: function (data) {
+        if(data.status == true){
+            response =  false;
+        }else{
+            response =  true;
+        }
+      },
+      async: false
+    });
+
+    return response;
+  
+  }, "This email already exists");
+
+  //main validate
+  $("#create-teacher").validate({
+    rules: {
+      user_login: {
+        required: true,
+        noSpace: true,
+        language: true,
+        usernamedupicate: true
+      },
+      user_photo: "required",
+      first_name: "required",
+      last_name: "required",
+      user_email: {
+        email: true,
+        required: true,
+        emaildupicate :true,
+      },
+      user_phone: {
+        number: true,
+        required: true,
+      },
+      user_pass: {
+        required: true,
+        minlength: 6,
+      },
+      password_confirm: {
+        required: true,
+        equalTo: "#user_pass",
+      }
+    },
+    messages: {
+      user_login: {
+        required: "จำเป็น",
+        noSpace: "ห้ามมีช่องว่าง",
+        language: 'เฉพาะภาษาอังกฤษ',
+        usernamedupicate: "ชื่อผู้ใช้งานนี้ถูกใช้งานแล้ว"
+      },
+      user_photo: "จำเป็น",
+      first_name: "จำเป็น",
+      last_name: "จำเป็น",
+      user_email: {
+        required: "จำเป็น",
+        email: "รูปแบบอีเมล์ไม่ถูกต้อง",
+        emaildupicate: "อีเมล์นร้ถูกใช้งานแล้ว",
+      },
+      user_phone: {
+        number: "เฉพาะตัวเลข",
+        required: "จำเป็น",
+      },
+      user_pass: {
+        required: "จำเป็น",
+        minlength: "รหัสผ่านต้องมีอย่างน้อย 6 ตัว"
+      },
+      password_confirm: {
+        required: "จำเป็น",
+        equalTo: "รหัสไม่ตรงกัน"
+      },
+    }
+  });
+
+  //upload photo
+  $("#user_photo").change(function (event) {
+    RecurFadeIn();
+    readURL(this);
+  });
+  $("#user_photo").on('click', function (event) {
+    RecurFadeIn();
+  });
+
+  function RecurFadeIn() {
+    FadeInAlert("Wait for it...");
+  }
+
+  function FadeInAlert(text) {
+    $(".alert").show();
+    $(".alert").text(text).addClass("loading");
+  }
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      var filename = $("#user_photo").val();
+      filename = filename.substring(filename.lastIndexOf('\\') + 1);
+      reader.onload = function (e) {
+        debugger;
+        $('#blah').attr('src', e.target.result);
+        $('#blah').hide();
+        $('#blah').fadeIn(500);
+        $('.custom-file-label').text(filename);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+    $(".alert").removeClass("loading").hide();
+  }
+
+  // using jQuery key form
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = jQuery.trim(cookies[i]);
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+</script>
+{% endblock %}

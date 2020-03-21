@@ -146,13 +146,6 @@ th.course-name {
     display: none;
 }
 
-.search-form--light button.btn.btn-primary {
-    height: 41px;
-    background: #db2d52;
-    color: #fff;
-    border-radius: 0 5px 5px 0;
-}
-
 .slide-thumb div#img_contain {
     margin: 0;
 }
