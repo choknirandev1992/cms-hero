@@ -4,170 +4,245 @@
 {% block  headercustom %}
 <!-- Sweet Alert -->
 <link rel="stylesheet" href="{% static 'css/sweetalert.css' %}">
+
+<!-- Flatpickr -->
+<link type="text/css" href="{% static 'css/flatpickr.css' %}" rel="stylesheet">
+<link type="text/css" href="{% static 'css/flatpickr.rtl.css' %}" rel="stylesheet">
+<link type="text/css" href="{% static 'css/flatpickr-airbnb.css' %}" rel="stylesheet">
+<link type="text/css" href="{% static 'css/flatpickr-airbnb.rtl.css' %}" rel="stylesheet">
+
 {% endblock %}
 
 {% block pagecontent %}
 
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">หน้าหลัก</a></li>
-    <li class="breadcrumb-item active">ผู้ใช้งานระบบ</li>
+    <li class="breadcrumb-item active">เพิ่มโปรเจกใหม่</li>
 </ol>
 <div class="d-flex flex-column flex-sm-row flex-wrap mb-headings align-items-start align-items-sm-center">
     <div class="flex mb-2 mb-sm-0">
-        <h1 class="h2">ผู้ใช้งานระบบ</h1>
+        <h1 class="h2">เพิ่มโปรเจก</h1>
     </div>
-    <a href="{% url 'addnewuser' %}" class="btn btn-success">เพิ่มผู้ใช้</a>
 </div>
 
-<div class="card card-body border-left-3 border-left-primary navbar-shadow mb-4">
-    <form method="GET">
-        <input type="hidden" name="s" value="search">
-        <div class="row">
-            <div class="col-6 col-md-3">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="ชื่อผู้ใช้งานระบบ" id="username" name="username" value="{{request.GET.username}}">
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">ข้อมูลเกี่ยวกับโปรเจก</h4>
+    </div>
+    <div class="card-body">
+        <form id="new_project" action="{% url 'save_new_project' %}" method="POST"> 
+            {% csrf_token %}   
+            <div class="form-group row">
+                <label for="quiz_title" class="col-sm-3 col-form-label form-label">ชื่อโปรเจก</label>
+                <div class="col-sm-9">
+                    <input name="project_name" type="text" class="form-control">
                 </div>
             </div>
-
-            <div class="col-6 col-md-3">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="ชื่อ" id="first_name" name="first_name" value="{{request.GET.first_name}}">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label form-label" >รายละเอียด</label>
+                <div class="col-sm-9">
+                   <textarea class="form-control" style="height:100px"></textarea>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="form-group">
-                   <input type="text" class="form-control" placeholder="อีเมล์" id="email" name="email" value="{{request.GET.email}}">
+            <div class="form-group row">
+                <label for="quiz_image" class="col-sm-3 col-form-label form-label">หมวดหมู่</label>
+                <div class="col-sm-9">
+                    <select class="form-control" multiple name="category">
+                        {% if category %}
+                            {% for cat in category %}
+                                <option value="{{cat.id}}">{{cat.name}}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option>ยังไม่มีหมวดหมู่</option>
+                        {% endif %}
+                    </select>
                 </div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="โทรศัพท์" id="phone" name="phone"
-                                value="{{request.GET.phone}}">
-                    <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit" role="button"><i class="material-icons">search</i></button>
+            <div class="form-group row">
+                <label for="quiz_image" class="col-sm-3 col-form-label form-label">ทีม</label>
+                <div class="col-sm-9">
+                    <select class="form-control" multiple name="user">
+                        {% if user %}
+                            {% for users in user %}
+                                <option value="{{users.id}}">{{users.first_name}}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option>ยังไม่มีหมวดหมู่</option>
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="cmn-toggle" class="col-sm-3 col-form-label form-label">กำหนดเสร็จ</label>
+                <div class="col-sm-9">
+                    <div class="form-group">
+                        <input id="flatpickrSample01" type="text" class="form-control" name="due_date"
+                            data-toggle="flatpickr" value="today">
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="d-flex flex-column flex-sm-row align-items-sm-center" style="white-space: nowrap;">
-            <small class="flex text-muted text-uppercase mr-3 mb-2 mb-sm-0">แสดง {{ profile.start_index }} ถึง
-                {{ profile.end_index }} จาก {{ profile.paginator.count }} รายการ</small>
-        </div>
-    </form>
+            <div class="form-group row">
+                <label for="cmn-toggle" class="col-sm-3 col-form-label form-label">สถานะ</label>
+                <div class="col-sm-9">
+                    <select id="custom-select" class="form-control custom-select" name="status">
+                        <option value="0">กำลังทำ</option>
+                        <option value="1">ยังไม่เริ่ม</option>
+                        <option value="2">เสร็จแล้ว</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row mb-0">
+                <div class="col-sm-9 offset-sm-3">
+                    <button type="submit" class="btn btn-success">บันทึก</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-{% if profile %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="card card-body border-left-3 navbar-shadow mb-4">
-            <table class="table mb-0">
-                <thead>
-                    <tr>
-                        <th>รูป</th>
-                        <th>ชื่อผู้ใช้ระบบ</th>
-                        <th>ชื่อ-สกุล</th>
-                        <th>อีเมล์</th>
-                        <th>โทรศัพท์</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody class="list" id="search">
-                    {% for profiles in profile %}
-                    <tr>
-                        <td class="user-avatar"><img src="{{profiles.user_photo.url}}" alt="Card image cap"
-                                class="avatar-img rounded"></td>
-                        <td>{{ profiles.user.username  }}</td>
-                        <td>{{ profiles.user.first_name  }} {{ profiles.user.last_name  }}</td>
-                        <td>{{ profiles.user.email }}</td>
-                        <td>{{ profiles.user_phone }}</td>
-                        <td>
-                            <a href="{% url 'editprofile' profiles.id %}" class="btn btn-white btn-sm"><i
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">สิ่งที่ต้องทำ</h4>
+    </div>
+    <div class="card-header">
+        <a href="#" data-toggle="modal" data-target="#editQuiz" class="btn btn-outline-secondary">เพิ่มรายการ <i
+                class="material-icons">add</i></a>
+    </div>
+    <div class="nestable" id="nestable">
+        <ul class="list-group list-group-fit nestable-list-plain mb-0">
+            <li class="list-group-item nestable-item">
+                <div class="media align-items-center">
+                    <div class="media-left">
+                        <a href="#" class="btn btn-default nestable-handle"><i class="material-icons">menu</i></a>
+                    </div>
+                    <div class="media-body">
+                        Installation
+                    </div>
+                    <div class="media-right text-right">
+                        <div style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#editQuiz" class="btn btn-primary btn-sm"><i
                                     class="material-icons">edit</i></a>
-                            <a href="javascript:void(0)" class="btn btn-white btn-sm remove-lesson"
-                                onclick="return deleteuser(user_id = {{ profiles.id }})"><i
-                                    class="material-icons">clear</i></a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item nestable-item">
+                <div class="media align-items-center">
+                    <div class="media-left">
+                        <a href="#" class="btn btn-default nestable-handle"><i class="material-icons">menu</i></a>
+                    </div>
+                    <div class="media-body">
+                        The MVC architectural pattern
+                    </div>
+                    <div class="media-right text-right">
+                        <div style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#editQuiz" class="btn btn-primary btn-sm"><i
+                                    class="material-icons">edit</i></a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item nestable-item">
+                <div class="media align-items-center">
+                    <div class="media-left">
+                        <a href="#" class="btn btn-default nestable-handle"><i class="material-icons">menu</i></a>
+                    </div>
+                    <div class="media-body">
+                        Database Models
+                    </div>
+                    <div class="media-right text-right">
+                        <div style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#editQuiz" class="btn btn-primary btn-sm"><i
+                                    class="material-icons">edit</i></a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item nestable-item" data-id="4">
+                <div class="media align-items-center">
+                    <div class="media-left">
+                        <a href="#" class="btn btn-default nestable-handle"><i class="material-icons">menu</i></a>
+                    </div>
+                    <div class="media-body">
+                        Database Access
+                    </div>
+                    <div class="media-right text-right">
+                        <div style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#editQuiz" class="btn btn-primary btn-sm"><i
+                                    class="material-icons">edit</i></a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item nestable-item" data-id="5">
+                <div class="media align-items-center">
+                    <div class="media-left">
+                        <a href="#" class="btn btn-default nestable-handle"><i class="material-icons">menu</i></a>
+                    </div>
+                    <div class="media-body">
+                        Eloquent Basics
+                    </div>
+                    <div class="media-right text-right">
+                        <div style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#editQuiz" class="btn btn-primary btn-sm"><i
+                                    class="material-icons">edit</i></a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item nestable-item" data-id="6">
+                <div class="media align-items-center">
+                    <div class="media-left">
+                        <a href="#" class="btn btn-default nestable-handle"><i class="material-icons">menu</i></a>
+                    </div>
+                    <div class="media-body">
+                        Take Quiz
+                    </div>
+                    <div class="media-right text-right">
+                        <div style="width:100px">
+                            <a href="#" data-toggle="modal" data-target="#editQuiz" class="btn btn-primary btn-sm"><i
+                                    class="material-icons">edit</i></a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
-<div class="row">
-    <!-- Pagination -->
-    {% if profile.has_other_pages %}
-    <ul class="pagination justify-content-center pagination-sm">
-        {% if profile.has_previous %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ profile.previous_page_number }}" aria-label="Previous">
-                <span aria-hidden="true" class="material-icons">chevron_left</span>
-                <span>Prev</span>
-            </a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true" class="material-icons">chevron_left</span>
-                <span>Prev</span>
-            </a>
-        </li>
-        {% endif %}
-        {% for i in profile.paginator.page_range %}
-        {% if profile.number == i %}
-        <li class="page-item active">
-            <a class="page-link" href="#" aria-label="1">
-                <span>{{ i }}</span>
-            </a>
-        </li>
-        {% else %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ i }}" aria-label="1">
-                <span>{{ i }}</span>
-            </a>
-        </li>
-        {% endif %}
-        {% endfor %}
-        {% if profile.has_next %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ profile.next_page_number }}" aria-label="Next">
-                <span>Next</span>
-                <span aria-hidden="true" class="material-icons">chevron_right</span>
-            </a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" href="#" aria-label="Next">
-                <span>Next</span>
-                <span aria-hidden="true" class="material-icons">chevron_right</span>
-            </a>
-        </li>
 
-        {% endif %}
-    </ul>
-    {% endif %}
-
-</div>
-
-{% else %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="alert alert-light alert-dismissible border-1 border-left-3 border-left-warning" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="text-black-70">ไม่พบรายการผู้ใช้งานระบบ</div>
-        </div>
-    </div>
-</div>
-{% endif %}
 
 {% endblock %}
 
 {% block footercustom %}
+<!-- validate -->
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
 
 <!-- Sweet Alert -->
 <script src="{% static 'vendor/sweetalert.min.js' %}"></script>
 <script src="{% static 'js/sweetalert.js' %}"></script>
+
+<!-- Flatpickr -->
+<script src="{% static 'vendor/flatpickr/flatpickr.min.js' %}"></script>
+<script src="{% static 'js/flatpickr.js' %}"></script>
+
+<script>
+//main validate
+  $("#new_project").validate({
+    rules: {
+      project_name: "required",
+      category: "required",
+      due_date: "required",
+      staus: "required",
+    },
+    messages: {
+      project_name: "จำเป็น",
+      category: "จำเป็น",
+      due_date: "จำเป็น",
+      staus: "จำเป็น",
+    },
+  });
+
+
+</script>
 
 {% endblock %}

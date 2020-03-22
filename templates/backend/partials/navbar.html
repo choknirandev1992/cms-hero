@@ -30,8 +30,8 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="sidebar-menu-item {% if request.resolver_match.url_name in 'project,add_project' %}open{% endif %}">
-                                        <a class="sidebar-menu-button sidebar-js-collapse {% if request.resolver_match.url_name in 'profile,addproject' %}show{% endif %}" data-toggle="collapse" href="#project_menu">
+                                    <li class="sidebar-menu-item {% if request.resolver_match.url_name in 'project,add_project,project_category' %}open{% endif %}">
+                                        <a class="sidebar-menu-button sidebar-js-collapse {% if request.resolver_match.url_name in 'profile,add_project,project_category' %}show{% endif %}" data-toggle="collapse" href="#project_menu">
                                             <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">subtitles</i>
                                             จัดการโปรเจก
                                             <span class="ml-auto sidebar-menu-toggle-icon"></span>
@@ -45,6 +45,11 @@
                                              <li class="sidebar-menu-item {% if request.resolver_match.url_name == 'add_project' %}active{% endif %}">
                                                 <a class="sidebar-menu-button" href="{% url 'add_project' %}">
                                                     <span class="sidebar-menu-text">สร้างใหม่</span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-menu-item {% if request.resolver_match.url_name == 'project_category' %}active{% endif %}">
+                                                <a class="sidebar-menu-button" href="{% url 'project_category' %}">
+                                                    <span class="sidebar-menu-text">หมวดหมู่</span>
                                                 </a>
                                             </li>
                                         </ul>

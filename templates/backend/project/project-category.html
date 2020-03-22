@@ -10,13 +10,13 @@
 
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'home' %}">หน้าหลัก</a></li>
-    <li class="breadcrumb-item active">โปรเจก</li>
+    <li class="breadcrumb-item active">ผู้ใช้งานระบบ</li>
 </ol>
 <div class="d-flex flex-column flex-sm-row flex-wrap mb-headings align-items-start align-items-sm-center">
     <div class="flex mb-2 mb-sm-0">
-        <h1 class="h2">โปรเจก</h1>
+        <h1 class="h2">ผู้ใช้งานระบบ</h1>
     </div>
-    <a href="{% url 'add_project' %}" class="btn btn-success">เพิ่มโปรเจกใหม่</a>
+    <a href="{% url 'addnewuser' %}" class="btn btn-success">เพิ่มผู้ใช้</a>
 </div>
 
 <div class="card card-body border-left-3 border-left-primary navbar-shadow mb-4">
@@ -51,61 +51,40 @@
         </div>
 
         <div class="d-flex flex-column flex-sm-row align-items-sm-center" style="white-space: nowrap;">
-            <small class="flex text-muted text-uppercase mr-3 mb-2 mb-sm-0">แสดง {{ project.start_index }} ถึง
-                {{ project.end_index }} จาก {{ project.paginator.count }} รายการ</small>
+            <small class="flex text-muted text-uppercase mr-3 mb-2 mb-sm-0">แสดง {{ profile.start_index }} ถึง
+                {{ profile.end_index }} จาก {{ profile.paginator.count }} รายการ</small>
         </div>
     </form>
 </div>
-{% if project %}
+{% if profile %}
 <div class="row">
     <div class="col-md-12">
         <div class="card card-body border-left-3 navbar-shadow mb-4">
             <table class="table mb-0">
                 <thead>
                     <tr>
-                        <th>ชื่อโปรเจก</th>
-                        <th>ทีมงาน</th>
-                        <th>หมวดหมู่</th>
-                        <th>วันที่สร้าง</th>
-                        <th>กำหนดเสร็จ</th>
-                        <th>สถานะ</th>
+                        <th>รูป</th>
+                        <th>ชื่อผู้ใช้ระบบ</th>
+                        <th>ชื่อ-สกุล</th>
+                        <th>อีเมล์</th>
+                        <th>โทรศัพท์</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody class="list" id="search">
-                    {% for project in project %}
+                    {% for profiles in profile %}
                     <tr>
-                        <td>{{ project.name  }}</td>
+                        <td class="user-avatar"><img src="{{profiles.user_photo.url}}" alt="Card image cap"
+                                class="avatar-img rounded"></td>
+                        <td>{{ profiles.user.username  }}</td>
+                        <td>{{ profiles.user.first_name  }} {{ profiles.user.last_name  }}</td>
+                        <td>{{ profiles.user.email }}</td>
+                        <td>{{ profiles.user_phone }}</td>
                         <td>
-                            {% if project.user.all %}
-                                <ul class="list-many">
-                                   {% for user in project.user.all %}
-                                   <li>{{user.first_name}} {{user.last_name}}</li>
-                                   {% endfor %}
-                                </ul>
-                            {% else %}
-                               -
-                            {% endif %}
-                        </td>
-                        <td> 
-                        {% if project.category.all %}
-                                <ul class="list-many">
-                                   {% for cat in project.category.all %}
-                                   <li>{{cat.name}}</li>
-                                   {% endfor %}
-                                </ul>
-                        {% else %}
-                               -
-                        {% endif %}
-                        </td>
-                        <td>{{ project.date_create |date:'Y-m-d H:i'  }}</td>
-                        <td>{{ project.due_date |date:'d/m/Y'  }}</td>
-                        <td>{{ project.status }}</td>
-                        <td>
-                            <a href="" class="btn btn-white btn-sm"><i
+                            <a href="{% url 'editprofile' profiles.id %}" class="btn btn-white btn-sm"><i
                                     class="material-icons">edit</i></a>
                             <a href="javascript:void(0)" class="btn btn-white btn-sm remove-lesson"
-                                onclick="return deleteuser(user_id = {{ project.id }})"><i
+                                onclick="return deleteuser(user_id = {{ profiles.id }})"><i
                                     class="material-icons">clear</i></a>
                         </td>
                     </tr>
